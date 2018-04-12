@@ -425,7 +425,10 @@ _dia_ask_checklist ()
 	while read -r line
 	do
 		ANSWER_CHECKLIST+=("$line")
-	done < $(_dia_dialog --separate-output $elab --checklist "$str" 0 0 0 "${list[@]}")
+	done << DELIMITER
+$(_dia_dialog --separate-output $elab --checklist "$str" 0 0 0 "${list[@]}")
+DELIMITER
+
 	local ret=$?
 	debug 'UI' "_dia_ask_checklist: user checked ON: ${ANSWER_CHECKLIST[@]}"
 	return $ret
@@ -555,7 +558,9 @@ _dia_ask_string_multiple ()
 	while read -r line
 	do
 		ANSWER_VALUES+=("$line")
-	done < $(_dia_dialog --form "$formtitle" 15 50 0 "${items[@]}")
+	done << DELIMITER
+$(_dia_dialog --form "$formtitle" 15 50 0 "${items[@]}")
+DELIMITER
 }
 
 
